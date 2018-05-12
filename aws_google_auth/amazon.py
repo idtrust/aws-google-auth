@@ -7,7 +7,6 @@ from threading import Thread
 import boto3
 from lxml import etree
 
-
 class Amazon:
 
     def __init__(self, config, saml_xml):
@@ -28,7 +27,7 @@ class Amazon:
         if self.__token is None:
             self.__token = self.sts_client.assume_role_with_saml(
                 RoleArn=self.config.role_arn,
-                PrincipalArn=self.config.provider,
+                PrincipalArn=self.config.provider.strip(),
                 SAMLAssertion=self.base64_encoded_saml,
                 DurationSeconds=self.config.duration)
         return self.__token
